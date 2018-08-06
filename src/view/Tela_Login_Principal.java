@@ -221,8 +221,8 @@ public class Tela_Login_Principal extends javax.swing.JFrame {
       con = fabrica.getConnection(jTextFieldNomServidor.getText(),jTextFieldNomUsuario.getText(), new String(jPasswordField1.getPassword())); 
         
       if (con!= null) {
-             Tela_Data_Base tdb = new Tela_Data_Base(con);
-             tdb.setVisible(true);
+             BasesDinamicas tdb = new BasesDinamicas(con);
+            
              this.dispose();
          } 
     }//GEN-LAST:event_jBtConectarActionPerformed

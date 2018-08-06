@@ -17,10 +17,7 @@ public class Tela_Data_Base extends javax.swing.JFrame {
       /**
      * Creates new form Tela_Data_Base
      */
-    public Tela_Data_Base(Connection conection) {
-        initComponents();
-    }
-    
+
     public Tela_Data_Base() {
         initComponents();
     }
@@ -92,8 +89,8 @@ public class Tela_Data_Base extends javax.swing.JFrame {
                         .addContainerGap(334, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jCheckBoxDataMart)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addComponent(jScrollBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,7 +111,7 @@ public class Tela_Data_Base extends javax.swing.JFrame {
                 .addComponent(jCheckBoxDWcoportativo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxDataMart)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
