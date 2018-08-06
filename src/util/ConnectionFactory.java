@@ -24,9 +24,9 @@ public class ConnectionFactory {
   private Connection connection;
     private String nomeServidor;
     private String usuario;
-    private char[] senha;   
+    private String senha;   
    
-    public Connection getConnection(String servidor, String usuario, char [] senha){
+    public Connection getConnection(String servidor, String usuario,String senha){
      this.nomeServidor=servidor;
         this.usuario=usuario;
         this.senha= senha;
