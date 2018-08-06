@@ -5,57 +5,31 @@
  */
 package view;
 
-
 import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import util.ConnectionFactory;
 
 /**
  *
  * @author aldam
  */
 public class Tela_Login_Principal extends javax.swing.JFrame {
-
-    private Connection connection;
-    private String nomeServidor;
-    private String usuario;
-    private char[] senha;
-
-    public String getNomeServidor() {
-        return nomeServidor;
-    }
-
-    public void setNomeServidor(String nomeServidor) {
-        this.nomeServidor = nomeServidor;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public char[] getSenha() {
-        return senha;
-    }
-
-    public void setSenha(char[] senha) {
-        this.senha = senha;
-    }
-
     /**
      * Creates new form telaLogin
      */
+    
+     
+     private Connection con;
     public Tela_Login_Principal() {
         initComponents();
     }
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,7 +47,7 @@ public class Tela_Login_Principal extends javax.swing.JFrame {
         jLnomUsuario = new javax.swing.JLabel();
         jLsenha = new javax.swing.JLabel();
         jTextFieldNomServidor = new javax.swing.JTextField();
-        jComboBoxAutenticar = new javax.swing.JComboBox<String>();
+        jComboBoxAutenticar = new javax.swing.JComboBox<>();
         jTextFieldNomUsuario = new javax.swing.JTextField();
         jPasswordFieldSenha = new javax.swing.JPasswordField();
         jPanelFuncao = new javax.swing.JPanel();
@@ -89,15 +63,12 @@ public class Tela_Login_Principal extends javax.swing.JFrame {
         jPanelPrincipal.setBorder(javax.swing.BorderFactory.createTitledBorder("Redoma - Tela de Login"));
 
         jBtCredito.setText("Créditos");
-
         jBtCredito.setPreferredSize(new java.awt.Dimension(100, 30));
-
         jBtCredito.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jBtCreditoMousePressed(evt);
             }
         });
-
 
         jLsimblo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/download.jpg"))); // NOI18N
 
@@ -108,9 +79,6 @@ public class Tela_Login_Principal extends javax.swing.JFrame {
         jLnomUsuario.setText("Nome do Usuário:");
 
         jLsenha.setText("Senha:");
-
-
-        jComboBoxAutenticar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Autenticação do SQL Server" }));
 
         jTextFieldNomServidor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,33 +104,6 @@ public class Tela_Login_Principal extends javax.swing.JFrame {
                 jPasswordFieldSenhaActionPerformed(evt);
             }
         });
-
-        jPanelFuncao.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jBtConectar.setText("Conectar");
-        jBtConectar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtConectarActionPerformed(evt);
-            }
-        });
-        jPanelFuncao.add(jBtConectar);
-
-        jBtSair.setText("Sair");
-        jBtSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtSairActionPerformed(evt);
-            }
-        });
-        jPanelFuncao.add(jBtSair);
-
-        jBtAjuda.setText("Ajuda");
-        jBtAjuda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtAjudaActionPerformed(evt);
-            }
-        });
-        jPanelFuncao.add(jBtAjuda);
-
 
         javax.swing.GroupLayout jPanelPrincipalLayout = new javax.swing.GroupLayout(jPanelPrincipal);
         jPanelPrincipal.setLayout(jPanelPrincipalLayout);
@@ -277,33 +218,28 @@ public class Tela_Login_Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtConectarActionPerformed
-
-        this.setNomeServidor(jTextFieldNomServidor.getText());
-        this.setUsuario(jTextFieldNomUsuario.getText());
-        this.setSenha(jPasswordFieldSenha.getPassword());
-
-        String url = "jdbc:sqlserver://" + this.getNomeServidor()
-                + ";user=" + this.getUsuario() + ";password=" + new String(this.getSenha()) + ";";
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url);
-            System.out.println(connection);
-            Tela_Data_Base tdb = new Tela_Data_Base();
-            tdb.setVisible(true);
-            this.dispose();
-        } catch (ClassNotFoundException e) {
-            // Erro caso o driver JDBC não foi instalado
-            e.printStackTrace();
-        } catch (SQLException e) {
-            // Erro caso haja problemas para se conectar ao banco de dados
-            e.printStackTrace();
-        }
-
+    ConnectionFactory fabrica = new ConnectionFactory();
+      con = fabrica.getConnection(jTextFieldNomServidor.getText(), jTextFieldNomUsuario.getText(), jPasswordFieldSenha.getPassword()); 
+        
+      if (con!= null) {
+             Tela_Data_Base tdb = new Tela_Data_Base(con);
+             tdb.setVisible(true);
+             this.dispose();
+         } 
     }//GEN-LAST:event_jBtConectarActionPerformed
 
     private void jBtSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtSairActionPerformed
         int resposta = JOptionPane.showConfirmDialog(null, "Deseja Sair Realmente ?");
+        if ( con !=null){
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                //erro ao fechar a conexão 
+                Logger.getLogger(Tela_Login_Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         if (resposta == JOptionPane.YES_OPTION) {
+            
             System.exit(0);
         }  
     }//GEN-LAST:event_jBtSairActionPerformed

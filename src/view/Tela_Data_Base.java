@@ -14,12 +14,10 @@ import java.sql.Connection;
  * @author aldam
  */
 public class Tela_Data_Base extends javax.swing.JFrame {
-    private static Connection conection;
-    /**
+      /**
      * Creates new form Tela_Data_Base
      */
     public Tela_Data_Base(Connection conection) {
-        this.conection = conection;
         initComponents();
     }
     
@@ -53,7 +51,6 @@ public class Tela_Data_Base extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DataBase");
-        setPreferredSize(new java.awt.Dimension(500, 500));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Selecione o(s) DataBase(s)"));
 
@@ -65,7 +62,7 @@ public class Tela_Data_Base extends javax.swing.JFrame {
 
         jLbdUsuario.setText("Banco de Dados de Usuários");
 
-        jCheckBoxFolhaPagamento.setText("AdventureWorks2014");
+        jCheckBoxFolhaPagamento.setText("Folha de Pagamento");
 
         jCheckBoxAcademico.setText("Acadêmico");
 
@@ -92,7 +89,7 @@ public class Tela_Data_Base extends javax.swing.JFrame {
                             .addComponent(jLbdsistemico)
                             .addComponent(jCheckBoxMaster)
                             .addComponent(jLbdUsuario))
-                        .addContainerGap(322, Short.MAX_VALUE))
+                        .addContainerGap(334, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jCheckBoxDataMart)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -117,7 +114,7 @@ public class Tela_Data_Base extends javax.swing.JFrame {
                 .addComponent(jCheckBoxDWcoportativo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxDataMart)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                 .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -165,8 +162,8 @@ public class Tela_Data_Base extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(32, 32, 32)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanelFuncao, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                 .addGap(39, 39, 39))
         );
@@ -187,8 +184,6 @@ public class Tela_Data_Base extends javax.swing.JFrame {
         if (resposta == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
-
-
     }//GEN-LAST:event_jBtCancelarActionPerformed
 
     private void jBtAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtAjudaActionPerformed
@@ -225,7 +220,14 @@ public class Tela_Data_Base extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Tela_Data_Base().setVisible(true);
+               // new Tela_Data_Base().setVisible(true);
+                try {
+                    BasesDinamicas frame = new BasesDinamicas();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+               
             }
         });
     }
