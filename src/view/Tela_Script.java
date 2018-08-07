@@ -73,9 +73,14 @@ public class Tela_Script extends javax.swing.JFrame {
 
         jCheckBoxABC.setText("abc");
 
-        jCheckBoxFragNaoCluster.setText("Indeces com fragmentação não clusterizado");
+        jCheckBoxFragNaoCluster.setText("Índices com fragmentação não clusterizado");
+        jCheckBoxFragNaoCluster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxFragNaoClusterActionPerformed(evt);
+            }
+        });
 
-        jCheckBoxFragCluster.setText("Indeces com fragmentação clusterizado");
+        jCheckBoxFragCluster.setText("Índices com fragmentação clusterizado");
         jCheckBoxFragCluster.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxFragClusterActionPerformed(evt);
@@ -176,7 +181,7 @@ public class Tela_Script extends javax.swing.JFrame {
                                         .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(10, 10, 10)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(173, Short.MAX_VALUE))
+                        .addContainerGap(177, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBoxIndexClusterTipoVariavel)
@@ -347,6 +352,10 @@ public class Tela_Script extends javax.swing.JFrame {
     private void jCheckBoxFragClusterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxFragClusterActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxFragClusterActionPerformed
+
+    private void jCheckBoxFragNaoClusterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxFragNaoClusterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxFragNaoClusterActionPerformed
 
     /**
      * @param args the command line arguments
