@@ -11,13 +11,9 @@ package view;
  */
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,88 +22,76 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.border.EmptyBorder;
 import util.Bases;
+
 public class BasesDinamicas extends JFrame {
    //variavel que armazena consulta as bases de dados existentes no banco
     private final String consulta="Select name,database_id From sys.databases;";
     private JPanel contentPane;
-    private JPanel panel;
-    private JButton btnAdicionarCheckbox;
-   private Connection con;
-    private JButton btnRemoverTodos;
-  
-    private List<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
+    private List<JCheckBox> checkboxes = new ArrayList<>();
     /**
      * Launch the application.
+     * @param args
      */
     
-    
-     
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BasesDinamicas frame = new BasesDinamicas();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-    
+     public BasesDinamicas() {
+      
+     }
     /**
      * Create the frame.
+     * @param con
      */
-     public BasesDinamicas() {
-     }
-    
     //monta uma tela para inclusão dos checkboxes
     public BasesDinamicas(Connection con) {
-        this.con= con;
-        contentPane= new JPanel();
-      //  contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-      //  contentPane.setLayout(new BorderLayout(0, 0));
-        contentPane.add(getPanel(), BorderLayout.CENTER);
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 450, 300);
+        contentPane = new JPanel();
+      
         setContentPane(contentPane);
-    }
-    private JPanel getPanel() {
-        if (panel == null) {
-            panel = new JPanel();
-           panel.add(AdicionarCheckbox(getDb(con)));
-          //  panel_1.add(getBtnRemoverCheckbox());
+        ListarCheckbox(getDb(con));
+        for (int i = 0; i< this.checkboxes.size();i++) {
+              JCheckBox checkBox =this.checkboxes.get(i);
+              checkBox.setBounds(10,20,10,10);
+              contentPane.add(checkBox);
         }
-        return panel;
+                setVisible(true);
     }
-     
-    private JButton AdicionarCheckbox(List<Bases> bases) {
+    
+    //transforma a lista de bases em uma lista de checkbox
+    private void ListarCheckbox(List<Bases> bases) {
+        
+       
+       
         for (Bases base : bases) {
-            JCheckBox checkBox = new JCheckBox();
+             JCheckBox checkBox = new JCheckBox();
             checkBox.setName(Integer.toString(base.getId()));
             checkBox.setText(base.getNome());
-            checkboxes.add(checkBox);
-            contentPane.add(checkBox);
-            contentPane.repaint();
+            //adiciona o checkbox a lista de checkbox
+            this.checkboxes.add(checkBox);
         }
-        return btnAdicionarCheckbox;
+        
     }
-    
-    
+
     //realiza uma consulta sobre as bases existentes no servidor
-    private List getDb(Connection con){
-      List listaBases = new ArrayList();
+    private List<Bases> getDb(Connection con){
+      List<Bases> listaBases = new ArrayList();
          Statement stmt;  
+        
         try {
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(consulta);
+            rs.next();
             listaBases = dbToList(rs);
+            
         } catch (SQLException ex) {
             //Logger.getLogger(BasesDinamicas.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erro no getdb");
             ex.printStackTrace();
+            
         }
            return listaBases;
     }
-    
     //transforma o resultado de uma consulta em uma lista de objetos do tipo Bases
     private List dbToList(ResultSet rs){
         List bases = new ArrayList();
@@ -120,47 +104,9 @@ public class BasesDinamicas extends JFrame {
             }
         } catch (SQLException ex) {
             //tratamento casso ocorra algum erro ao percorrer o Resultset (resultado da consulta)
+            System.out.println("erro no dbtolist");
             Logger.getLogger(BasesDinamicas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return bases;
-    }
-    
-    private int indiceCheckbox = 0;
-    private JButton getBtnAdicionarCheckbox() {
-        if (btnAdicionarCheckbox == null) {
-            btnAdicionarCheckbox = new JButton("Adicionar Checkbox");
-            btnAdicionarCheckbox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    JCheckBox checkBox = new JCheckBox();
-                    indiceCheckbox++;
-                    checkBox.setText(String.format("Combo id # %d", indiceCheckbox));
-                    panel.add(checkBox); // adiciona o componente criado ao panel...
-                    checkboxes.add(checkBox); // e à lista
-                    panel.validate();
-                    panel.repaint(); // redesenha o painel para mostrar o novo checkbox
-                }
-            });
-        }
-        return btnAdicionarCheckbox;
-    }
-    
-    
-    
-    private JButton getBtnRemoverTodos() {
-        if (btnRemoverTodos == null) {
-            btnRemoverTodos = new JButton("Remover Todos");
-            btnRemoverTodos.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    for (JCheckBox checkbox : checkboxes) {
-                        panel.remove(checkbox); // remove os componentes do panel
-                    }
-                    checkboxes.clear(); // limpa a lista
-                    panel.validate();
-                    panel.repaint(); // redesenha o painel para mostrar o novo checkbox
-                }
-            });
-        }
-        return btnRemoverTodos;
     }
 }

@@ -98,8 +98,6 @@ public class Tela_Login_Principal extends javax.swing.JFrame {
             }
         });
 
-        jPasswordField1.setText("jPasswordField1");
-
         javax.swing.GroupLayout jPanelPrincipalLayout = new javax.swing.GroupLayout(jPanelPrincipal);
         jPanelPrincipal.setLayout(jPanelPrincipalLayout);
         jPanelPrincipalLayout.setHorizontalGroup(
@@ -222,7 +220,7 @@ public class Tela_Login_Principal extends javax.swing.JFrame {
         
       if (con!= null) {
              BasesDinamicas tdb = new BasesDinamicas(con);
-            
+              tdb.setVisible(true);
              this.dispose();
          } 
     }//GEN-LAST:event_jBtConectarActionPerformed
