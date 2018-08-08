@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.bean.IndicesFillFactor;
+import model.bean.IndicesNaoUtilizados;
 import model.bean.IndicesNoPrimary;
 
 /**
@@ -448,6 +449,43 @@ public class Tela_Script extends javax.swing.JFrame {
                 + "                                    AND database_id = DB_ID() )\n"
                 + "        AND o.[type] = 'U'\n"
                 + "ORDER BY OBJECT_NAME(i.[object_id]) ASC ;";
+
+        //abrir conexao;
+        Connection minhaConexao = new Tela_Resumo().getTelaScript().conection;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<IndicesNaoUtilizados> listaResultSet = new ArrayList<>();
+
+        try {
+            //É preciso percorrer o PreparedStatement
+            /*toda a consulta ta denro do do stmt que e a declaracao ja prepada
+            (Prepared Stamtement)*/
+            //Preparou tudo mas e preciso executar
+            stmt = minhaConexao.prepareStatement(idxNaoUtilizados);
+            //retorna um resultset o executeQuery()
+            //valores retornados estao em rs
+            rs = stmt.executeQuery();//query porque e consulta 
+            //para percorrer o resultSet
+
+            while (rs.next()) {//enquanto houver próximo;
+                IndicesNaoUtilizados inn = new IndicesNaoUtilizados();
+                
+                inn.setNomeIndice("NomeIndice");
+                inn.setNomeTabela("NomeTabela");
+
+                listaResultSet.add(inn);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Erro :" + ex);
+        } finally {
+            try {
+                minhaConexao.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Tela_Resumo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jCheckBoxIndiceNaoUtilizadoActionPerformed
 
     /**
