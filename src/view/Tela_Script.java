@@ -9,10 +9,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.bean.IndicesFillFactor;
+import model.bean.IndicesNoPrimary;
 
 /**
  *
@@ -110,14 +116,9 @@ public class Tela_Script extends javax.swing.JFrame {
 
         jCheckBoxABC.setText("abc");
 
-        jCheckBoxFragNaoCluster.setText("Índices com fragmentação não clusterizado");
-        jCheckBoxFragNaoCluster.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxFragNaoClusterActionPerformed(evt);
-            }
-        });
+        jCheckBoxFragNaoCluster.setText("Indeces com fragmentação não clusterizado");
 
-        jCheckBoxFragCluster.setText("Índices com fragmentação clusterizado");
+        jCheckBoxFragCluster.setText("Indeces com fragmentação clusterizado");
 
         jScrollBar1.setOrientation(javax.swing.JScrollBar.HORIZONTAL);
         jScrollBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -130,6 +131,11 @@ public class Tela_Script extends javax.swing.JFrame {
         });
 
         jCheckBoxIndiceNaoUtilizado.setText("Índices não utilizados");
+        jCheckBoxIndiceNaoUtilizado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxIndiceNaoUtilizadoActionPerformed(evt);
+            }
+        });
 
         jCheckBoxMaiorIndice.setText("Os top 10 - maiores indices");
 
@@ -202,7 +208,7 @@ public class Tela_Script extends javax.swing.JFrame {
                                         .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(10, 10, 10)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(177, Short.MAX_VALUE))
+                        .addContainerGap(173, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBoxTableHeap)
@@ -376,10 +382,6 @@ public class Tela_Script extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_checkFileGroupPrimaryActionPerformed
 
-    private void jCheckBoxFragNaoClusterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxFragNaoClusterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxFragNaoClusterActionPerformed
-
     private void jCheckBoxFillFactorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxFillFactorActionPerformed
         // Listar todos os índices com Fillfactor menor que X - parâmetro int;
         if (jCheckBoxFillFactor.isSelected()) {
@@ -393,8 +395,60 @@ public class Tela_Script extends javax.swing.JFrame {
                     + "WHERE a.OrigFillFactor < " + parametroFill + "\n"
                     + "ORDER BY a.OrigFillFactor DESC";
 
+            //abrir conexao;
+            Connection minhaConexao = new Tela_Resumo().getTelaScript().conection;
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+
+            List<IndicesFillFactor> listaResultSet = new ArrayList<>();
+
+            try {
+                //É preciso percorrer o PreparedStatement
+                /*toda a consulta ta denro do do stmt que e a declaracao ja prepada
+            (Prepared Stamtement)*/
+                //Preparou tudo mas e preciso executar
+                stmt = minhaConexao.prepareStatement(selectFill);
+                //retorna um resultset o executeQuery()
+                //valores retornados estao em rs
+                rs = stmt.executeQuery();//query porque e consulta 
+                //para percorrer o resultSet
+
+                while (rs.next()) {//enquanto houver próximo;
+                    IndicesFillFactor iff = new IndicesFillFactor();
+
+                    iff.setNomeDoBanco("NomeDoBanco");
+                    iff.setNomeIndice("NomeIndice");
+                    iff.setNomeTabela("NomeTabela");
+
+                    listaResultSet.add(iff);
+                }
+
+            } catch (SQLException ex) {
+                System.err.println("Erro :" + ex);
+            } finally {
+                try {
+                    minhaConexao.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tela_Resumo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_jCheckBoxFillFactorActionPerformed
+
+    private void jCheckBoxIndiceNaoUtilizadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxIndiceNaoUtilizadoActionPerformed
+        // Cristiano: Índices não utilizados
+        String idxNaoUtilizados = "SELECT  OBJECT_NAME(i.[object_id]) AS [Table Name] ,\n"
+                + "        i.name\n"
+                + "FROM    sys.indexes AS i\n"
+                + "        INNER JOIN sys.objects AS o ON i.[object_id] = o.[object_id]\n"
+                + "WHERE   i.index_id NOT IN ( SELECT  s.index_id\n"
+                + "                            FROM    sys.dm_db_index_usage_stats AS s\n"
+                + "                            WHERE   s.[object_id] = i.[object_id]\n"
+                + "                                    AND i.index_id = s.index_id\n"
+                + "                                    AND database_id = DB_ID() )\n"
+                + "        AND o.[type] = 'U'\n"
+                + "ORDER BY OBJECT_NAME(i.[object_id]) ASC ;";
+    }//GEN-LAST:event_jCheckBoxIndiceNaoUtilizadoActionPerformed
 
     /**
      * @param args the command line arguments
