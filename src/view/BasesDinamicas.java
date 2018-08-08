@@ -9,7 +9,6 @@ package view;
  *
  * @author Valmir Andrade
  */
-
 import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -26,81 +25,91 @@ import javax.swing.border.EmptyBorder;
 import util.Bases;
 
 public class BasesDinamicas extends JFrame {
-   //variavel que armazena consulta as bases de dados existentes no banco
-    private final String consulta="Select name,database_id From sys.databases;";
+
+    //variavel que armazena consulta as bases de dados existentes no banco
+    private final String consulta = "Select name,database_id From sys.databases;";
     private JPanel contentPane;
     private List<JCheckBox> checkboxes = new ArrayList<>();
+
+    //declaracao de botoes 
+    private javax.swing.JButton jBtAjuda = new javax.swing.JButton();
+    private javax.swing.JButton jBtAvancar = new javax.swing.JButton();
+    private javax.swing.JButton jBtCancelar = new javax.swing.JButton();
+    private javax.swing.JScrollBar jScrollBar1 = new javax.swing.JScrollBar();
+
     /**
      * Launch the application.
+     *
      * @param args
      */
-    
-     public BasesDinamicas() {
-      
-     }
+    public BasesDinamicas() {
+
+    }
+
     /**
      * Create the frame.
+     *
      * @param con
      */
     //monta uma tela para inclusão dos checkboxes
     public BasesDinamicas(Connection con) {
-       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
+        setTitle("DataBase");
         contentPane = new JPanel();
-      
+        contentPane.setBorder(javax.swing.BorderFactory.createTitledBorder("Selecione o(s) DataBase(s)"));        
         setContentPane(contentPane);
         ListarCheckbox(getDb(con));
-        for (int i = 0; i< this.checkboxes.size();i++) {
-              JCheckBox checkBox =this.checkboxes.get(i);
-              checkBox.setBounds(10,20,10,10);
-              contentPane.add(checkBox);
+        for (int i = 0; i < this.checkboxes.size(); i++) {
+            JCheckBox checkBox = this.checkboxes.get(i);
+            checkBox.setBounds(10, 20, 10, 10);
+            contentPane.add(checkBox);
         }
-                setVisible(true);
+        setVisible(true);
     }
-    
+
     //transforma a lista de bases em uma lista de checkbox
     private void ListarCheckbox(List<Bases> bases) {
-        
-       
-       
+
         for (Bases base : bases) {
-             JCheckBox checkBox = new JCheckBox();
+            JCheckBox checkBox = new JCheckBox();
             checkBox.setName(Integer.toString(base.getId()));
             checkBox.setText(base.getNome());
             //adiciona o checkbox a lista de checkbox
             this.checkboxes.add(checkBox);
         }
-        
+
     }
 
     //realiza uma consulta sobre as bases existentes no servidor
-    private List<Bases> getDb(Connection con){
-      List<Bases> listaBases = new ArrayList();
-         Statement stmt;  
-        
+    private List<Bases> getDb(Connection con) {
+        List<Bases> listaBases = new ArrayList();
+        Statement stmt;
+
         try {
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(consulta);
             rs.next();
             listaBases = dbToList(rs);
-            
+
         } catch (SQLException ex) {
             //Logger.getLogger(BasesDinamicas.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("erro no getdb");
             ex.printStackTrace();
-            
+
         }
-           return listaBases;
+        return listaBases;
     }
+
     //transforma o resultado de uma consulta em uma lista de objetos do tipo Bases
-    private List dbToList(ResultSet rs){
+    private List dbToList(ResultSet rs) {
         List bases = new ArrayList();
         try {
             while (rs.next()) {
                 Bases base = new Bases();
                 base.setNome(rs.getString("name"));
-                 base.setId(rs.getInt("database_id"));
-                 bases.add(base);
+                base.setId(rs.getInt("database_id"));
+                bases.add(base);
             }
         } catch (SQLException ex) {
             //tratamento casso ocorra algum erro ao percorrer o Resultset (resultado da consulta)
