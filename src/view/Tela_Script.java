@@ -343,23 +343,26 @@ public class Tela_Script extends javax.swing.JFrame {
 
     private void jCheckBoxFillFactorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxFillFactorActionPerformed
         // Listar todos os índices com Fillfactor menor que X - parâmetro int;
-        int parametroFill = jSlider3.getValue();
-        String selectFill = "SELECT DB_NAME() AS DBNAME, a.name AS IndexName, \n"
-                + " a.OrigFillFactor AS Fill_Factor, b.table_name\n"
-                + "FROM sysindexes AS a\n"
-                + "INNER JOIN information_schema.tables AS b \n"
-                + " ON (OBJECT_ID(b.table_name) = a.id) \n"
-                + " AND b.table_type = 'BASE TABLE'\n"
-                + "WHERE a.OrigFillFactor < " + parametroFill + "\n"
-                + "ORDER BY a.OrigFillFactor DESC";
+        if (jCheckBoxFillFactor.isSelected()) {
+            int parametroFill = jSlider3.getValue();
+            String selectFill = "SELECT DB_NAME() AS DBNAME, a.name AS IndexName, \n"
+                    + " a.OrigFillFactor AS Fill_Factor, b.table_name\n"
+                    + "FROM sysindexes AS a\n"
+                    + "INNER JOIN information_schema.tables AS b \n"
+                    + " ON (OBJECT_ID(b.table_name) = a.id) \n"
+                    + " AND b.table_type = 'BASE TABLE'\n"
+                    + "WHERE a.OrigFillFactor < " + parametroFill + "\n"
+                    + "ORDER BY a.OrigFillFactor DESC";
 
-        PreparedStatement stmt = getConnection().prepareStatement(selectFill);
-        
-        try {
-            stmt.executeQuery();
-        } catch (SQLException ex) {
-            Logger.getLogger(Tela_Script.class.getName()).log(Level.SEVERE, null, ex);
+            PreparedStatement stmt = getConnection().prepareStatement(selectFill);
+
+            try {
+                stmt.executeQuery();
+            } catch (SQLException ex) {
+                Logger.getLogger(Tela_Script.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }//GEN-LAST:event_jCheckBoxFillFactorActionPerformed
 
     private void jCheckBoxFragClusterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxFragClusterActionPerformed
@@ -405,7 +408,7 @@ public class Tela_Script extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private Object getConnection() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -440,5 +443,4 @@ public class Tela_Script extends javax.swing.JFrame {
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
-    
 }
