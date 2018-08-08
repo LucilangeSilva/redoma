@@ -79,10 +79,15 @@
                                       <Component id="jLNomeServidor" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLautenticacao" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jComboBoxAutenticar" pref="276" max="32767" attributes="0"/>
-                                      <Component id="jTextFieldNomServidor" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                                          <Component id="jComboBoxAutenticar" pref="276" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="jTextFieldNomServidor" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <Group type="102" attributes="0">
@@ -111,12 +116,12 @@
                       <Component id="jLsimblo" min="-2" max="-2" attributes="0"/>
                       <Component id="jBtCredito" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextFieldNomServidor" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jLNomeServidor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLNomeServidor" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldNomServidor" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLautenticacao" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBoxAutenticar" alignment="3" pref="31" max="32767" attributes="0"/>
@@ -144,6 +149,9 @@
               <Dimension value="[100, 30]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jBtCreditoMousePressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLsimblo">
           <Properties>
@@ -173,6 +181,10 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNomServidor">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldNomServidorActionPerformed"/>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jTextFieldNomServidorPropertyChange"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxAutenticar">
           <Properties>
@@ -183,12 +195,19 @@
             </Property>
           </Properties>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Tela_Login_Principal_jComboBoxAutenticar"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNomUsuario">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldNomUsuarioActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPasswordFieldSenha">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPasswordFieldSenhaActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

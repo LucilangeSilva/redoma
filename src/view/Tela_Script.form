@@ -95,12 +95,12 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jCheckBoxIndexClusterTipoVariavel" min="-2" max="-2" attributes="0"/>
-                              <Component id="jCheckBoxFileGroup" min="-2" max="-2" attributes="0"/>
                               <Component id="jCheckBoxTableHeap" min="-2" max="-2" attributes="0"/>
                               <Component id="jCheckBoxIndiceNaoUtilizado" min="-2" max="-2" attributes="0"/>
                               <Component id="jCheckBoxABC" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabelOpcaoIndex" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="checkFileGroupPrimary" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCheckBoxIndexClusterTipoVariavel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jCheckBoxFragCluster" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
@@ -153,7 +153,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jCheckBoxMaiorIndice" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jCheckBoxFileGroup" min="-2" max="-2" attributes="0"/>
+                  <Component id="checkFileGroupPrimary" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="32767" attributes="0"/>
                   <Component id="jCheckBoxIndexClusterTipoVariavel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -202,9 +202,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="&#xcd;ndices com fragmenta&#xe7;&#xe3;o clusterizado"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxFragClusterActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JScrollBar" name="jScrollBar1">
           <Properties>
@@ -228,17 +225,11 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="&#xcd;ndices n&#xe3;o utilizados"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxIndiceNaoUtilizadoActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckBoxMaiorIndice">
           <Properties>
             <Property name="text" type="java.lang.String" value="Os top 10 - maiores indices"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxMaiorIndiceActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JSlider" name="jSlider3">
           <Properties>
@@ -247,20 +238,19 @@
             <Property name="paintTicks" type="boolean" value="true"/>
             <Property name="value" type="int" value="0"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Tela_Script_jSlider3"/>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckBoxTableHeap">
           <Properties>
             <Property name="text" type="java.lang.String" value=" Tabelas heap"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBoxFileGroup">
+        <Component class="javax.swing.JCheckBox" name="checkFileGroupPrimary">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#xcd;ndices localizado no Filegroup PRIMARY"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkFileGroupPrimaryActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckBoxIndexClusterTipoVariavel">
           <Properties>
@@ -306,9 +296,6 @@
               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
             </BindingProperty>
           </BindingProperties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
