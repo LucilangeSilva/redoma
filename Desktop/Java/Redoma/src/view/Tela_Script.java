@@ -579,6 +579,27 @@ public class Tela_Script extends javax.swing.JFrame {
             }
         });
     }
+     public void TabelaHeap() {
+        if (jCheckBoxTableHeap.isSelected()) {
+
+            String selectTabela = " SELECT i.name AS index_name\n "
+                    + ",i.type_desc \n"
+                    + ",is_unique \n"
+                    + ",ds.type_desc AS filegroup_or_partition_scheme \n"
+                    + ",ds.name AS filegroup_or_partition_scheme_name \n"
+                    + ",ignore_dup_key \n"
+                    + ",is_primary_key \n"
+                    + ",is_unique_constraint \n"
+                    + ",fill_factor \n"
+                    + ",is_padded \n"
+                    + ",is_disabled \n"
+                    + ",allow_row_locks \n"
+                    + ",allow_page_locks \n"
+                    + "FROM sys.indexes AS i \n"
+                    + "INNER JOIN sys.data_spaces AS ds ON i.data_space_id = ds.data_space_id \n"
+                    + "WHERE is_hypothetical = 0 AND i.index_id<> 0\n"
+                    + "AND i.object_id = OBJECT_ID('Person.Address');";
+      }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox checkFileGroupPrimary;
